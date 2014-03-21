@@ -1,8 +1,5 @@
 # Description:
 #   Angry citizen
-#
-# Commands:
-#   hubot как дела? - answers to stupid questions
 
 ME = "(bot|Володя|Владимир)[:|,]?"
 
