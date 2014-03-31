@@ -8,6 +8,7 @@ MATCHES = {
   rudeness: RegExp("#{ME}\\s*(пожуй.*говна|ты.*хуй|(иди|пошёл).*(на.?хуй|в жопу))", "i"),
   itsme: /ето я/,
   pravoslavie: /(^|[\.!?,]\s+)(а можно|можно ли)[^\.]+\?/,
+  why: /(^|[\.!?,]\s+)(почему)[^\.]*\?/,
   whois: RegExp("(кто такой|что за)\\s*#{ME}", "i"),
   troll: RegExp("тролл.*\\s*#{ME}", "i"),
   grammar:
@@ -25,6 +26,7 @@ REPLIES = {
   rudeness: "не быкуй!",
   itsme: "НЕТ Я!",
   pravoslavie: ["ГРЕШНО!", "НЕТ, БОГ НАКАЖЕТ!", "БОЖЕ УПАСИ!", "ГРЕШНОВАТО!"],
+  why: "Зато Крым наш!",
   whois: "Я единственный легитимный бот Володя.",
   troll: "Анус себе потролль, пёс!",
   grammar: "Правильно писать"
@@ -34,6 +36,7 @@ module.exports = (robot) ->
   # Questions?
   robot.hear MATCHES.questions, (msg) ->
     return if MATCHES.pravoslavie.test(msg.match[0])
+    return if MATCHES.why.test(msg.match[0])
 
     question = msg.match[2].replace("ты ", "что я ").replace(/\?$/, "").trim()
     prefix = msg.random(REPLIES.questions.prefixes)
@@ -51,6 +54,10 @@ module.exports = (robot) ->
   # Pravoslavie
   robot.hear MATCHES.pravoslavie, (msg) ->
     msg.send msg.random(REPLIES.pravoslavie)
+
+  # Why
+  robot.hear MATCHES.why, (msg) ->
+    msg.send REPLIES.why
 
   # Whois
   robot.hear MATCHES.whois, (msg) ->
