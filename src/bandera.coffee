@@ -20,8 +20,8 @@ module.exports = (robot) ->
     msg.send "Я единственный легитимный бот в этом чате."
 
   # Putin
-  robot.hear /putin|путин|huilo|хуйло/i, (msg) ->
-    msg.send "Путин всех переиграл!"
+  robot.hear /putin|путин|huilo|хуйло|птн|пнх/i, (msg) ->
+    msg.send msg.random(["Путин всех переиграл!", "Путин ХУЙЛО!"])
 
   # Prohibit
   robot.hear /запрет|prohibit/i, (msg) ->
