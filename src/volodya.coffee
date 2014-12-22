@@ -46,7 +46,7 @@ module.exports = (robot) ->
 
   # Rudeness
   robot.hear MATCHES.rudeness, (msg) ->
-    msg.send "#{msg.message.user.name}, #{REPLIES.rudeness}"
+    msg.send "@#{msg.message.user.name}, #{REPLIES.rudeness}"
 
   # It's me
   robot.hear MATCHES.itsme, (msg) ->
@@ -71,4 +71,4 @@ module.exports = (robot) ->
   # Grammar
   for mistake, correct of MATCHES.grammar
     robot.hear RegExp("(^|\\s)(#{mistake})(\\s|$)", "i"), (msg) ->
-      msg.send "#{REPLIES.grammar} «#{MATCHES.grammar[msg.match[2]]}», #{msg.message.user.name}"
+      msg.send "#{REPLIES.grammar} «#{MATCHES.grammar[msg.match[2]]}», @#{msg.message.user.name}"
