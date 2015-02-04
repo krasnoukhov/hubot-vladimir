@@ -26,3 +26,7 @@ module.exports = (robot) ->
   # Prohibit
   robot.hear /запрет|prohibit/i, (msg) ->
     msg.send "Роскомнадзор скоро тебя запретит!"
+
+  # Coincidence
+  robot.hear /совпадение\?/i, (msg) ->
+    msg.send "НЕ ДУМАЮ!"
