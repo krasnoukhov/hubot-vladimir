@@ -30,3 +30,15 @@ module.exports = (robot) ->
   # Coincidence
   robot.hear /совпадение\?/i, (msg) ->
     msg.send "НЕ ДУМАЮ!"
+
+  # Both victory and betrayal
+  robot.hear /(перемога|зрада)(.*)(перемога|зрада)/i, (msg) ->
+    msg.send "Очевидно, что БОРОТЬБА ТРИВАЄ"
+
+  # Victory
+  robot.hear /перемога/i, (msg) ->
+    msg.send "А я думаю что ЗРАДА"
+
+  # Betrayal
+  robot.hear /зрада/i, (msg) ->
+    msg.send "А я думаю что ПЕРЕМОГА"
