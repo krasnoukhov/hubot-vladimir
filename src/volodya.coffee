@@ -48,7 +48,7 @@ module.exports = (robot) ->
 
   # Rudeness
   robot.hear MATCHES.rudeness, (msg) ->
-    msg.send "@#{msg.message.user.name}, #{REPLIES.rudeness}"
+    msg.reply REPLIES.rudeness
 
   # It's me
   robot.hear MATCHES.itsme, (msg) ->
