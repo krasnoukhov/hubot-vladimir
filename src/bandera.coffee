@@ -36,11 +36,11 @@ module.exports = (robot) ->
     msg.send "Очевидно, что БОРОТЬБА ТРИВАЄ"
 
   # Victory
-  robot.hear /перемога/i, (msg) ->
+  robot.hear /(.*)перемога(.*)/i, (msg) ->
     if msg.match[0].indexOf("зрада") == -1
       msg.send "А я думаю что ЗРАДА"
 
   # Betrayal
-  robot.hear /зрада/i, (msg) ->
+  robot.hear /(.*)зрада(.*)/i, (msg) ->
     if msg.match[0].indexOf("перемога") == -1
       msg.send "А я думаю что ПЕРЕМОГА"
