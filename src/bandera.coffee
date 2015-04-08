@@ -1,10 +1,5 @@
 # Description:
 #   Radical citizen
-#
-# Commands:
-#   Слава Україні - bandera is partriotic
-#   Слава нации - bandera is partriotic
-#   А я легитимный? - bandera is legetimate
 
 module.exports = (robot) ->
   # Patriotic
