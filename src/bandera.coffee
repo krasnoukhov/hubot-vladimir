@@ -39,3 +39,7 @@ module.exports = (robot) ->
   robot.hear /(.*)зрада(.*)/i, (msg) ->
     if msg.match[0].indexOf("перемога") == -1
       msg.send "А я думаю что ПЕРЕМОГА"
+
+  # Coffee meme
+  robot.hear /mustafa|мустафа|коломойский|коломойський|журналист|депутат/i, (msg) ->
+    msg.send "Мустафа, кофе идешь пить?"
