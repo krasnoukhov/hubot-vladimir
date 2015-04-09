@@ -41,5 +41,5 @@ module.exports = (robot) ->
       msg.send "А я думаю что ПЕРЕМОГА"
 
   # Coffee meme
-  robot.hear /mustafa|мустафа|коломойский|коломойський|журналист|депутат/i, (msg) ->
+  robot.hear /mustafa|мустафа|nayyem|nayem|наєм|найем|коломойский|коломойський|журналист|депутат/i, (msg) ->
     msg.send "Мустафа, кофе идешь пить?"
