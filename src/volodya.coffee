@@ -11,6 +11,7 @@ MATCHES = {
   why: /(^|[\.!?,]\s+)(почему)[^\.]*\?/,
   whois: RegExp("(кто такой|что за)\\s*#{ME}", "i"),
   troll: RegExp("тролл.*\\s*#{ME}", "i"),
+  lifenews: RegExp("#{ME}\\s*(ну )?(чо|че|что|шо|што) (там)( y)? (хохл(ов|ы))\\?", "i"),
   grammar:
     'типо': 'типа',
     'извени': 'извини',
@@ -32,12 +33,16 @@ REPLIES = {
   why: "Зато Крым наш!",
   whois: "Я единственный легитимный бот Володя.",
   troll: "Анус себе потролль, пёс!",
-  grammar: "Правильно писать"
+  grammar: "Правильно писать",
+  error: "Отказ вот пришел"
 }
+
+cheerio = require("cheerio")
 
 module.exports = (robot) ->
   # Questions?
   robot.hear MATCHES.questions, (msg) ->
+    return if MATCHES.lifenews.test(msg.match[0])
     return if MATCHES.pravoslavie.test(msg.match[0])
     return if MATCHES.why.test(msg.match[0])
 
@@ -74,3 +79,13 @@ module.exports = (robot) ->
   for mistake, correct of MATCHES.grammar
     robot.hear RegExp("(^|\\s)(#{mistake})(\\s|$)", "i"), (msg) ->
       msg.send "#{REPLIES.grammar} «#{MATCHES.grammar[msg.match[2]]}», @#{msg.message.user.name}"
+
+  # Cho tam
+  robot.hear MATCHES.lifenews, (msg) ->
+    msg.http("http://lifenews.ru/search/украина").get() (err, res, body) ->
+      if err or res.statusCode isnt 200
+        msg.send REPLIES.error
+        return
+
+      $ = cheerio.load(body)
+      msg.send "http://lifenews.ru" + $("#container-news-list article:first a:first").attr("href")
