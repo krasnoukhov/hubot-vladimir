@@ -42,9 +42,9 @@ cheerio = require("cheerio")
 module.exports = (robot) ->
   # Questions?
   robot.hear MATCHES.questions, (msg) ->
-    return if MATCHES.lifenews.test(msg.match[0])
     return if MATCHES.pravoslavie.test(msg.match[0])
     return if MATCHES.why.test(msg.match[0])
+    return if MATCHES.lifenews.test(msg.match[0])
 
     question = msg.match[2].replace("ты ", "что я ").replace(/\?$/, "").trim()
     prefix = msg.random(REPLIES.questions.prefixes)
