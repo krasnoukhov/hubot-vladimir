@@ -88,7 +88,7 @@ module.exports = (robot) ->
         return
 
       $ = cheerio.load(body)
-      post = $(msg.random($("section .publication")))
+      post = $(msg.random($("#news-feed .publication")))
 
       title = post.find("h1 a").text()
       image = post.find("img").attr("src")
