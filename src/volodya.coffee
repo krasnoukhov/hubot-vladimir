@@ -11,7 +11,7 @@ MATCHES = {
   why: /(^|[\.!?,]\s+)(почему)[^\.]*\?/,
   whois: RegExp("(кто такой|что за)\\s*#{ME}", "i"),
   troll: RegExp("тролл.*\\s*#{ME}", "i"),
-  lifenews: RegExp("#{ME}\\s*(ну\\s+)?(чо|че|что|шо|што)\\s+(там)(\\s+у)?\\s+(хохл(ов|ы))\\?", "i"),
+  lifenews: RegExp("#{ME}\\s*(ну\\s+)?(чо|че|что|шо|што)\\s+(там)(\\s+у)?\\s+(хохл(ов|ы))\\??", "i"),
   grammar:
     'типо': 'типа',
     'извени': 'извини',
@@ -34,6 +34,7 @@ REPLIES = {
   whois: "Я единственный легитимный бот Володя.",
   troll: "Анус себе потролль, пёс!",
   grammar: "Правильно писать",
+  chotam: "А я хуй знает что там у хохлов"
   error: "Отказ вот пришел"
 }
 
@@ -90,9 +91,14 @@ module.exports = (robot) ->
       $ = cheerio.load(body)
       post = $(msg.random($("#news-feed .publication")))
 
-      title = post.find("h1 a").text()
-      image = post.find("img").attr("src")
-      link = "http://lifenews.ru#{post.find("a").attr("href")}"
+      if post.find("a").attr("href")
+        title = post.find("h1 a").text()
+        image = post.find("img").attr("src")
+        link = "http://lifenews.ru#{post.find("a").attr("href")}"
 
-      msg.send image
-      msg.send "#{title}\n\n#{link}"
+        msg.send image
+        msg.send title
+        msg.send link
+      else
+        console.error body
+        msg.send REPLIES.chotam
