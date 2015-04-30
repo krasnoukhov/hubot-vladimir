@@ -83,7 +83,7 @@ module.exports = (robot) ->
 
   # Cho tam
   robot.hear MATCHES.lifenews, (msg) ->
-    msg.http("http://lifenews.ru/tag/украина").get() (err, res, body) ->
+    msg.http("http://lifenews.ru/tag/%D1%83%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D0%B0").get() (err, res, body) ->
       if err or res.statusCode isnt 200
         msg.send REPLIES.error
         return
