@@ -82,10 +82,10 @@ module.exports = (robot) ->
 
   # Cho tam
   robot.hear MATCHES.lifenews, (msg) ->
-    msg.http("http://lifenews.ru/search/украина").get() (err, res, body) ->
+    msg.http("http://lifenews.ru/tag/украина").get() (err, res, body) ->
       if err or res.statusCode isnt 200
         msg.send REPLIES.error
         return
 
       $ = cheerio.load(body)
-      msg.send "http://lifenews.ru" + $("#container-news-list article:first a:first").attr("href")
+      msg.send "http://lifenews.ru" + $(".publication:first-child a").attr("href")
