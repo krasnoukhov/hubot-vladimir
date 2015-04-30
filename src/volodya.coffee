@@ -88,4 +88,11 @@ module.exports = (robot) ->
         return
 
       $ = cheerio.load(body)
-      msg.send "http://lifenews.ru" + $(".publication:first-child a").attr("href")
+      post = $(msg.random($("section .publication")))
+
+      title = post.find("h1 a").text()
+      image = post.find("img").attr("src")
+      link = "http://lifenews.ru#{post.find("a").attr("href")}"
+
+      msg.send image
+      msg.send "#{title}\n\n#{link}"
