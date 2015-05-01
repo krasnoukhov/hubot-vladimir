@@ -96,9 +96,7 @@ module.exports = (robot) ->
         image = post.find("img").attr("src")
         link = "http://lifenews.ru#{post.find("a").attr("href")}"
 
-        msg.send image
-        msg.send title
-        msg.send link
+        msg.send image, title, link
       else
         console.error body
         msg.send REPLIES.chotam
