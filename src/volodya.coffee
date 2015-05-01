@@ -38,6 +38,10 @@ REPLIES = {
   error: "Отказ вот пришел"
 }
 
+CACHE = {
+  chotam: []
+}
+
 cheerio = require("cheerio")
 
 module.exports = (robot) ->
@@ -89,14 +93,30 @@ module.exports = (robot) ->
         return
 
       $ = cheerio.load(body)
-      post = $(msg.random($("#news-feed .publication")))
+      posts = $("#news-feed .publication")
+      post = null
+      i = 0
 
-      if post.find("a").attr("href")
+      while !post
+        i += 1
+        candidate = $(msg.random(posts))
+        guid = candidate.find("a").attr("href")
+
+        if CACHE.chotam.indexOf(guid) == -1
+          post = candidate
+          CACHE.chotam.push(guid)
+        else
+          break if i >= posts.length
+
+      if post
         title = post.find("h1 a").text()
-        image = post.find("img").attr("src")
+        image = post.find("img").attr("src").replace("200x150", "600x430")
         link = "http://lifenews.ru#{post.find("a").attr("href")}"
 
-        msg.send image, title, link
+        msg.send image
+        setTimeout(=>
+          msg.send "#{title} – #{link}"
+        , 0)
       else
         console.error body
         msg.send REPLIES.chotam
