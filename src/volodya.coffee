@@ -109,14 +109,7 @@ module.exports = (robot) ->
           break if i >= posts.length
 
       if post
-        title = post.find("h1 a").text()
-        image = post.find("img").attr("src").replace("200x150", "600x430")
-        link = "http://lifenews.ru#{post.find("a").attr("href")}"
-
-        msg.send image
-        setTimeout(=>
-          msg.send "#{title} – #{link}"
-        , 0)
+        msg.send "http://lifenews.ru#{post.find("a").attr("href")}"
       else
         console.error body
         msg.send REPLIES.chotam
