@@ -45,6 +45,10 @@ CACHE = {
 cheerio = require("cheerio")
 
 module.exports = (robot) ->
+  # Telegram Commands
+  robot.hear "/pidor", (msg) ->
+    msg.reply "Нахуя нажал?"
+
   # Questions?
   robot.hear MATCHES.questions, (msg) ->
     return if MATCHES.pravoslavie.test(msg.match[0])
