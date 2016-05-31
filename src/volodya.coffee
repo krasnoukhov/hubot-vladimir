@@ -11,7 +11,7 @@ MATCHES = {
   why: /(^|[\.!?,]\s+)(почему)[^\.]*\?/,
   whois: RegExp("(кто такой|что за)\\s*#{ME}", "i"),
   troll: RegExp("тролл.*\\s*#{ME}", "i"),
-  lifenews: RegExp("#{ME}\\s*(ну\\s+)?(чо|че|что|шо|што)\\s+(там)(\\s+у)?\\s+(хохл(ов|ы))\\??", "i"),
+  propaganda: RegExp("#{ME}\\s*(ну\\s+)?(чо|че|что|шо|што)\\s+(там)(\\s+у)?\\s+(хохл(ов|ы))\\??", "i"),
   grammar:
     'типо': 'типа',
     'извени': 'извини',
@@ -53,7 +53,7 @@ module.exports = (robot) ->
   robot.hear MATCHES.questions, (msg) ->
     return if MATCHES.pravoslavie.test(msg.match[0])
     return if MATCHES.why.test(msg.match[0])
-    return if MATCHES.lifenews.test(msg.match[0])
+    return if MATCHES.propaganda.test(msg.match[0])
 
     question = msg.match[2].replace("ты ", "что я ").replace(/\?$/, "").trim()
     prefix = msg.random(REPLIES.questions.prefixes)
@@ -90,14 +90,14 @@ module.exports = (robot) ->
       msg.send "#{REPLIES.grammar} «#{MATCHES.grammar[msg.match[2]]}», @#{msg.message.user.name}"
 
   # Cho tam
-  robot.hear MATCHES.lifenews, (msg) ->
-    msg.http("http://lifenews.ru/tag/%D1%83%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D0%B0").get() (err, res, body) ->
+  robot.hear MATCHES.propaganda, (msg) ->
+    msg.http("https://russian.rt.com/Ukraina").get() (err, res, body) ->
       if err or res.statusCode isnt 200
         msg.send REPLIES.error
         return
 
       $ = cheerio.load(body)
-      posts = $("#news-feed .publication")
+      posts = $(".rows__column_section-left .card__heading")
       post = null
       i = 0
 
@@ -113,7 +113,7 @@ module.exports = (robot) ->
           break if i >= posts.length
 
       if post
-        msg.send "http://lifenews.ru#{post.find("a").attr("href")}"
+        msg.send "https://russian.rt.com#{post.find("a").attr("href")}"
       else
         console.error body
         msg.send REPLIES.chotam
